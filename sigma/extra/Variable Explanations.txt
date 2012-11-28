@@ -1,0 +1,127 @@
+INPUTS:
+{ User Inputs
+	INPUT[0] = "Number of Workers"
+	INPUT[1] = "Number of Cash Registers"
+	INPUT[2] = "Number of Blenders"
+	INPUT[3] = "Number of Ovens"
+	OPTIME[0] = "Amount of preparation time before store opens to customers each day"
+	OPTIME[1] = "Amount of time the store is open to customers each day"
+	THRESH[1] = "Restocking threshold for cupcakes"
+	THRESH[2] = "Restocking threshold for fillings"
+	THRESH[3] = "Restocking threshold for frosting
+	THRESH[4] = "Restocking threshold for decorations"
+	CUSTPREF[1;1] = "Probability customer orders Vanilla cupcakes"
+	CUSTPREF[1;2] = "Probability customer orders Chocolate cupcakes"
+	CUSTPREF[1;3] = "Probability customer orders Strawberry cupcakes"
+	CUSTPREF[2;0] = "Probability customer does not order any filling"
+	CUSTPREF[2;1] = "Probability customer orders Vanilla filling"
+	CUSTPREF[2;2] = "Probability customer orders Chocolate filling"
+	CUSTPREF[2;3] = "Probability customer orders Strawberry filling"
+	CUSTPREF[3;0] = "Probability customer does not order any frosting"
+	CUSTPREF[3;1] = "Probability customer orders Vanilla frosting"
+	CUSTPREF[3;2] = "Probability customer orders Chocolate frosting"
+	CUSTPREF[3;3] = "Probability customer orders Strawberry frosting"
+	CUSTPREF[4;0] = "Probability customer does not order any decorations"
+	CUSTPREF[4;1] = "Probability customer orders Chocolate piece decoration"
+	CUSTPREF[4;2] = "Probability customer orders Fondant piece decoration"
+	CUSTPREF[4;3] = "Probability customer orders Custom (not store bought) Candy decoration"
+
+	}
+
+{Model explanations
+	I[0]= 1 if not ordered, 0 ordered
+	I[1]= cakes
+	I[2]= fillings
+	I[3]= frostings
+	I[4]= decorations
+	I[5]= # of cupcakes
+	I[6]= time
+}
+
+Resource Array:
+Worker: RES[0]
+Register: RES[1]
+Blender: RES[2]
+Oven: RES[3]
+
+((INDEX + 5*TYPE)*TYPE + 2) is to account for the fact that if there are no supplies for product i and type j, the order cannot join the normal queue because then this order will be taken out of the queue by a free server (assuming that the first time this occurs this order will have the lowest or one of the lowest IDs and therefore will be taken out of the queue to be assembled before the necessary supplies are finished being restocked)
+
+Restock Queues
+
+11 8
+12 24
+13 50
+21 9
+22 26
+23 53
+31 10
+32 28
+33 56
+41 11
+42 30
+43 59 
+
+MISC[0], MISC[1] used in function to calculate how many batches can be made during the WARMUP event.
+MISC[2] = the number of batches that can be made with the given resources during the warm-up event.
+
+OPTIME array
+*ALL TIMES ARE IN MINUTES:
+warm up time = index 0
+
+open hours = index 1 (ex: open 6 hours a day)
+
+The time (in sigma) until the store closes for that day = index 2 (ex: if the store begins its "open" time at CLK = 500, then the end of the day will be at CLK = 500 + open hours)
+
+current day of week for operation = index 3
+
+the time that day i ends and day j begins = index 4 (it is the time passed from either finishr or leave when there are no more events for that day)
+
+
+WAITQ array
+
+WAITQ[0;ID] = TIME THAT ID CUSTOMER WAITED IN LINE TO ORDER
+WAITQ[1;ID] = TIME THAT ID CUSTOMER WAITED IN LINE FOR CUPCAKES TO FINISH
+
+TOTAL array
+
+TOTAL[0] = total number of customers entering system (this number is also used to initially assign the entering customer with a customer ID-once the customer has arrived and either starts service or joins the queue, the customer ID is tracked by the variable ID)
+TOTAL[1] = total number of cupcakes sold throughout the week
+TOTAL[2] = total number of cupcakes ordered for day i
+TOTAL[3] = total number of cupcakes sold for day i
+TOTAL[4] = total number of customers entering store for day i
+TOTAL[5] = total number of customers leaving store for day i
+
+SUPPLY array
+The supply of product with INDEX i and TYPE j where i = 1,2,3,4 and j = 1,2
+
+INVT array
+At the end of old day/beginning of new day the supply from the old day is put into the inventory array so that we can calculate how many supplies from day i are transferred to day (i + 1)
+INVT[8 BY 9 ARRAY]-Row 0 and Column 0 are empty
+
+UNIFORM RANDOM VARIABLES
+
+Restock Array based on Index:
+0,0
+30,40
+12,15
+7,10
+2,4
+
+
+***NOTE: For preparing the cake for the oven, I assumed that it would take between 13-17 minutes.  After the 13-17 minutes, the server becomes free and the cupcakes are in the oven and cool for 30-40 minutes.  We will assume that the time it takes for the cupcakes to be taken from the "cooling" area to the preparation area is negligible.
+
+RESTOCKT[0;0]=0,RESTOCKT[0;1]=0,RESTOCKT[1;0]=30,RESTOCKT[1;1]=40,RESTOCKT[2;0]=12,RESTOCKT[2;1]=15,RESTOCKT[3;0]=7,RESTOCKT[3;1]=10,RESTOCKT[4;0]=3,RESTOCKT[4;1]=5,
+
+RESTOCKT[INDEX;0] + (RESTOCKT[INDEX;1]-RESTOCKT[INDEX;0])*RND
+
+Service station Array based on Index:
+1,3
+1/6,1
+.5,2
+.5,2
+.5,2
+
+
+SERVICET[0;0]=1,SERVICET[0;1]=3,SERVICET[1;0]=.2,SERVICET[1;1]=1,SERVICET[2;0]=.5,SERVICET[2;1]=2,SERVICET[3;0]=.5,SERVICET[3;1]=2,SERVICET[4;0]=.5,SERVICET[4;1]=2
+
+SERVICET[INDEX;0] + (SERVICET[INDEX;1]-SERVICET[INDEX;0])*RND

@@ -1,0 +1,79 @@
+<!DOCTYPE html> 
+<html dir="ltr" lang="en-US"> 
+
+<head> 
+<!-- SigmaWeb By Sanketh Katta --> 
+	<meta charset="utf-8" /> 
+	<title>{{ info['team'] }}</title> 
+
+	<!-- Stylesheets --> 
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css"/> 
+	<link rel="stylesheet" type="text/css" href="sigmaweb.css"/> 
+	<link rel="stylesheet" type="text/css" href="nv.d3.css"/> 
+	<!-- JavaScripts --> 
+	<script type="text/javascript" src="d3.v2.min.js"></script> 
+	<script type="text/javascript" src="nv.d3.min.js"></script> 
+    <script type="text/javascript" src="lineWithFocusChart.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+	
+</head> 
+ 
+<body background="http://img.foodnetwork.com/FOOD/2010/05/26/cw_set-art-multi-cupcakes_s4x3_lg.jpg" style="opacity:0.95;" align="left"> 
+    % include navbar data={"info": info, "__simulate": "active", "__results": "", "__analysis": ""}
+
+    <div class="container" style="width:1200px">
+        <div class="row" style="background-color:#48D1CC;width:1175px;height:100px">
+            <div class="page-header" style="width:1175px;height:100px">
+                    <h1><font size="7" face="Arial" color="FF69B4"> Simulate<b>.</b> </font> <font size="6" face="Arial" color="FFB6C1"> Customize your parameters </font> </h1>
+            </div>
+        </div>
+        <div class="row">
+            <!--div class="span5"-->
+             <div id="menu" style="background-color:#FFB6C1;height:2500px;width:425px;float:left;">
+                <form class="form-horizontal" method="post">
+                    <div class="control-group">
+                         <label class="control-label" style="width:275px"> <font size="5" face="Arial" color="20B2AA"> <b> {{ sigma['runtime']['display'] }} </b> </label>
+                         <div class="controls">
+                            <b> <input type="text" style="width:125px" name="{{ sigma['runtime']['name'] }}" value="{{ sigma['runtime']['default'] }}"> </b>
+                         </font>
+						 </div>
+                     </div>
+                    % for param in sigma['parameters']:
+                     <div class="control-group">
+                         <label class="control-label" style="width:275px; background-color:#FFB6C1"> <font size="5" face="Arial" color="20B2AA"> <b> {{ param['display'] }} </b> </label>
+                         <div class="controls">
+                            <input type="text" style="width:125px" name="{{ param['name'] }}" value="{{ param['default'] }}"> 
+                         </font> </div>
+                     </div>
+                     % end
+                    <center>	<input class="btn btn-large btn-block btn-primary" style="width:300px" type="submit" value="Run Simulation"> </center>
+				</form>
+            </div>
+			<div class="Blank Content" style="background-color:#F5FFFA;height:2500px;width:100px;float:left;">
+			</div>
+			
+			<div id="content" style="background-color:#F5FFFA;height:2500px;width:650px;float:left;">
+				<div class="span7">
+					<svg id="test1" style="height:700px;width:600px"></svg>
+				<div class="input-prepend input append">
+					<div class = "btn-group">
+						<button class = "btn" onclick = "decreasea()" > Alpha- </button>
+									<input class="span1" id="Alpha" type="text">
+						<button class="btn" onclick="incrementa()"> Alpha+ </button>
+						<button class = "btn" onclick = "decreaseb()" > Beta- </button>
+									<input class="span1" id="Beta" type="text">
+						<button class="btn" onclick="incrementb()"> Beta+ </button>
+					</div>
+				</div>
+				<div>
+				<button type="submit" class="btn" onclick = "update()" >Submit</button>
+				</div>
+				<script type="text/javascript" src="Beta.js"></script>
+				</div>
+			</div>
+        </div>
+   </div>
+</body> 
+</html> 
+ 

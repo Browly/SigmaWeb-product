@@ -1,0 +1,8 @@
+name SigCake2.exe
+file SigCake2.obj
+option quiet
+libpath C:\PROGRA~2\BIOPRO~1\Sigma\Libs\std_lib
+libpath C:\Users\Browly\DOCUME~1\16THGR~1\Fall\IEOR13~1\Product\SIGMAW~1\sigma\extra\
+library kernel32,user32,advapi32,Sigmalib
+format windows nt ^
+runtime console=4.0

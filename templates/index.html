@@ -1,0 +1,39 @@
+<!DOCTYPE html> 
+<html dir="ltr" lang="en-US"> 
+
+<head> 
+<!-- SigmaWeb By Sanketh Katta --> 
+	<meta charset="utf-8" /> 
+	<title> {{ info['team'] }} </title> 
+
+	<!-- Stylesheets --> 
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css"/> 
+	<link rel="stylesheet" type="text/css" href="sigmaweb.css"/> 
+
+</head> 
+
+<body background="http://img.foodnetwork.com/FOOD/2010/05/26/cw_set-art-multi-cupcakes_s4x3_lg.jpg"  style="background-color:#FF69B4; opacity:0.9"> 
+    % include navbar data={"info": info, "__simulate": "", "__results": ""}
+
+    <div class="container" style="background-color:#48D1CC; height:1250px; width:1250px;">
+        <div class="row">
+            <div class="span12">
+                <div class="hero-unit" style="background-color:#48D1CC; height:1200px; width:1200px">
+                <h1> <font size="6" face="Arial" color="FF1493"> Greetings! :) Welcome to </font> <font size="7" face="comic sans MS" color="DC143C"> {{ info['team'] }}! </font> </h1>
+				<p> <font size="5" face="Georgia"> <b> By </b> {{ info['members'] }} </font> </p>
+                <p> <font size="5" face="Arial" color="FF1493"> Why choose </font> <font size="5" face="comic sans MS" color="DC143C"> {{ info['team'] }}? </font> </p>
+                <p> <font size="5" face="Arial" color="00BFFF"> <b> Because <font color="1E90FF"> <i> we </i> </font> know that ... </b> </font> </p>
+				<ul> <font size="4" face="Arial" color="#00FF7F">
+					<li> <font size="6"> <b> YOU </font> </b> are competing with <font size="6"> <b> 600 </b> </font> other cupcake stores in the United States, and you want to be the <font size="6"> <b> best </b> </font> cupcake store! </li>
+					<li> <font size="6"> <b> YOU </font> </b> want to <font size="5"> <b> reduce waste </b> and <b> excess materials </b> </font>  </li>
+					<li> <font size="6"> <b> YOU </font> </b> value your <font size="5"> <b> customers </b> </font> and wants to provide the <b> best </b> service possible. </li>
+					<li> Finally, <font size="6"> <b> YOU </font> </b> want to be <font size="6"> <b> successful! :) </b> </font> </font> </li>
+				</UL>
+				<p> <a href="/simulate" class="btn btn-primary btn-large">Let's Get Started! </a> </p>
+                </div>
+            </div>
+        </div>
+   </div>
+</body> 
+</html> 
+ 

@@ -1,0 +1,54 @@
+151 at 1:30.
+131 at 5pm
+tomorrow 131 at 3pm. 
+
+
+
+This block of code is all the client inputs?
+
+Ideas: Have it save their inputs? How do I do that? Create a data file with it and read it everytime or store it as a variable? 
+
+What will be the default value for these inputs
+
+Things to output
+
+Average waiting time. 
+# of customers servers	: 
+# of cupcakes served 	: TOTAL[1]
+# profit. No one cares about anything else. Lol. 
+
+
+Notes from Soroush
+Option to adjust number of replications, and also number of days.
+Options for Confidence 
+
+how many times they want to run. 
+Find the baseline. 
+1. Confidence histogram for 5% and try to improve off of it
+2. Compare everything to that. 
+3. Default is around 100. 
+
+4. Turn off the trace events to make it run faster. 
+5. Want histrogram want target chart and sensitivity analysis. 
+6. 
+
+Need to create a huge function. 
+Create a scatter plot take the average. And see how it compares to the 
+y-axis KPI
+x-axis what we modified. And we see what messes up. 
+
+Extract all the data from the input file.
+	1. User puts in inputs
+	2. Create a datafile from this.
+	3. Run simulation to find baseline.
+	4. Start sensitivity analysis. 
+	5. Go into data file. 
+
+	Run a target with this many steps.
+	I want 1-10 moer of these resources
+	I want 10% decrement until I see a platue. 
+
+Figure out how to add another website to the thing. 
+Create an interactive beta distribution page? 
+	How do customer arrivals be? a poisson process. 
+	Beta is for how long something takes. 

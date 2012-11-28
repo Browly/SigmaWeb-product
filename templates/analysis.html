@@ -1,0 +1,50 @@
+<!DOCTYPE html> 
+<html dir="ltr" lang="en-US"> 
+<head> 
+<!-- SigmaWeb By Sanketh Katta --> 
+	<meta charset="utf-8" /> 
+	<title>{{ info['team'] }}</title> 
+
+	<!-- Stylesheets --> 
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css"/> 
+	<link rel="stylesheet" type="text/css" href="sigmaweb.css"/> 
+	<link rel="stylesheet" type="text/css" href="nv.d3.css"/> 
+
+	<!-- JavaScripts --> 
+	<script type="text/javascript" src="d3.v2.min.js"></script> 
+	<script type="text/javascript" src="nv.d3.min.js"></script> 
+    <script type="text/javascript" src="lineWithFocusChart.js"></script>
+	<script type="text/javascript" src="discreteBarChart.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <script type="text/javascript">
+	
+		
+    </script>
+</head> 
+
+<body> 
+    % include navbar data={"info": info, "__simulate": "", "__results": "active"}
+    
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <div class="page-header">
+                    <h1>Analysis. <small>analyze your output<small> 
+</h1>
+                </div>
+                
+				<div id="test1">
+					<svg style="height:500px"></svg>
+				</div>
+				<script type="text/javascript" src="Scatterplot.js"></script>
+				</div>
+				
+				</div>
+				
+            </div>
+        </div>
+   </div>
+</body> 
+</html> 
+ 

@@ -1,0 +1,838 @@
+
+
+         MODEL DEFAULTS
+         --------------
+
+Model Name:         SigCake2.mod
+Model Description:  
+Output File:        SigCake2.OUT
+Output Plot Style:  NOAUTO_FIT
+Run Mode:           HI_SPEED
+Trace Vars:         QTYPE,Q[TYPE],OPTIME[3],OPTIME[2],INDEX,TYPE,SUPPLY[1;1]
+Random Number Seed: 12346
+Initial Values:     8,4,4,4,120,360,30,30,30,30,.4,.4,.2,.1,.3,.3,.3,.1,.3,.3,.3,.1,.3,.3,.3
+Ending Condition:   STOP_ON_TIME
+Ending Time:        20000.000
+Trace Events:       ALL EVENTS TRACED
+Hide Edges:         
+
+
+
+         STATE VARIABLES
+         ---------------
+
+     State Variable #1
+Name:          R
+Description:   array of random numbers
+Type:          REAL
+Size:          6
+
+     State Variable #2
+Name:          I
+Description:   array of customer order details
+Type:          INTEGER
+Size:          7
+
+     State Variable #3
+Name:          ID
+Description:   customer ID number
+Type:          INTEGER
+Size:          1
+
+     State Variable #4
+Name:          TOTAL
+Description:   
+Type:          INTEGER
+Size:          6
+
+     State Variable #5
+Name:          ENT
+Description:   
+Type:          INTEGER
+Size:          15
+
+     State Variable #6
+Name:          RNK
+Description:   array of random numbers
+Type:          REAL
+Size:          10000
+
+     State Variable #7
+Name:          Q
+Description:   
+Type:          INTEGER
+Size:          15627
+
+     State Variable #8
+Name:          INDEX
+Description:   index for checking stations
+Type:          INTEGER
+Size:          1
+
+     State Variable #9
+Name:          SUPPLY
+Description:   Resources for station i and type j
+Type:          INTEGER
+Size:          5,4
+
+     State Variable #10
+Name:          TYPE
+Description:   
+Type:          INTEGER
+Size:          1
+
+     State Variable #11
+Name:          RESTOCK
+Description:   0-1 array if ingregient in restock process
+Type:          REAL
+Size:          5,4
+
+     State Variable #12
+Name:          RES
+Description:   array of resources
+Type:          REAL
+Size:          4
+
+     State Variable #13
+Name:          QTYPE
+Description:   Denotes which queue the customer is in
+Type:          INTEGER
+Size:          1
+
+     State Variable #14
+Name:          AVAIL
+Description:   # servers at time of finshr
+Type:          INTEGER
+Size:          1
+
+     State Variable #15
+Name:          OPTIME
+Description:   
+Type:          INTEGER
+Size:          5
+
+     State Variable #16
+Name:          WAITQ
+Description:   
+Type:          INTEGER
+Size:          2,7812
+
+     State Variable #17
+Name:          INPUT
+Description:   Various inputs from the client
+Type:          INTEGER
+Size:          15627
+
+     State Variable #18
+Name:          INVT
+Description:   Inventory array for day i
+Type:          INTEGER
+Size:          8,13
+
+     State Variable #19
+Name:          RESTOCKT
+Description:   Restock distribution times
+Type:          REAL
+Size:          5,4
+
+     State Variable #20
+Name:          SERVICET
+Description:   Service distribution times
+Type:          REAL
+Size:          5,4
+
+     State Variable #21
+Name:          PREPT
+Description:   Time to prepare cupcake batter for oven
+Type:          REAL
+Size:          1
+
+     State Variable #22
+Name:          IND
+Description:   
+Type:          INTEGER
+Size:          2
+
+     State Variable #23
+Name:          CUSTPREF
+Description:   
+Type:          REAL
+Size:          5,4
+
+     State Variable #24
+Name:          CLOSE
+Description:   
+Type:          INTEGER
+Size:          1
+
+     State Variable #25
+Name:          REMAIN
+Description:   
+Type:          REAL
+Size:          1
+
+     State Variable #26
+Name:          CLOSESTK
+Description:   
+Type:          INTEGER
+Size:          5,4
+
+     State Variable #27
+Name:          THRESH
+Description:   
+Type:          INTEGER
+Size:          5
+
+     State Variable #28
+Name:          MISC
+Description:   
+Type:          REAL
+Size:          15627
+
+
+
+          VERTICES
+          --------
+
+     Vertex #1
+Name:             RUN
+Description:      rnk[1]=1 denotes that the orderq is sorted by ent[1], the time the ID customer arrived (in increasing order), rnk[2]=6 denotes that Q is sorted by ent[6], the ID of customer (in increasing order, so that customers that arrived first get their cupcakes worked on first)
+State Changes:    RNK[2]=7,RNK[8]=7,RNK[9]=7,RNK[10]=7,RNK[11]=7,RNK[24]=7,RNK[26]=7,RNK[28]=7,RNK[30]=7,RNK[50]=7,RNK[53]=7,RNK[56]=7,RNK[59]=7,RES[0]=INPUT[0],RES[1]=INPUT[1],RES[2]=INPUT[2],RES[3]=INPUT[3],MISC[0]=(RES[0]>RES[2]),MISC[1]=((RES[2]/2)>RES[3]),MISC[2]=(OPTIME[0]/60)*((MISC[0]*MISC[1]*2*RES[3])+(MISC[0]*(1-MISC[1])*RES[2])+((1-MISC[0])*MISC[1]*2*RES[3])+((1-MISC[0])*(1-MISC[1])*RES[0]))
+Parameter(s):     INPUT[0],INPUT[1],INPUT[2],INPUT[3],OPTIME[0],OPTIME[1],THRESH[1],THRESH[2],THRESH[3],THRESH[4],CUSTPREF[1;1],CUSTPREF[1;2],CUSTPREF[1;3],CUSTPREF[2;0],CUSTPREF[2;1],CUSTPREF[2;2],CUSTPREF[2;3],CUSTPREF[3;0],CUSTPREF[3;1],CUSTPREF[3;2],CUSTPREF[3;3],CUSTPREF[4;0],CUSTPREF[4;1],CUSTPREF[4;2],CUSTPREF[4;3]
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X: -0.99;  Y:  2.72;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #2
+Name:             CHECK_S
+Description:      
+State Changes:    
+Parameter(s):     I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X:  1.46;  Y:  1.94;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #3
+Name:             LEAVE
+Description:      
+State Changes:    WAITQ[1;ID]=CLK-I[6],TOTAL[1]=TOTAL[1]+I[5],TOTAL[5]=TOTAL[5]+1
+Parameter(s):     I[5],I[6],ID
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X:  1.00;  Y:  2.27;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #4
+Name:             FINISH
+Description:      
+State Changes:    RES[0]=RES[0]+1,RES[1]=RES[1]+1*(INDEX==0),TYPE=I[INDEX],I[INDEX]=0,WAITQ[0;ID]=(CLK-I[6])*(INDEX==0)+(WAITQ[0;ID]*(INDEX>0)),I[6]=CLK*(INDEX==0)+(I[6]*(INDEX>0))
+Parameter(s):     I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X: -0.00;  Y:  1.93;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #5
+Name:             SUP
+Description:      
+State Changes:    AVAIL=0
+Parameter(s):     I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X:  1.46;  Y:  1.23;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #6
+Name:             ARRIVE
+Description:      Customer arrives but doesn't get a chance to place an order. (We need to add a non order queue variable)
+State Changes:    TOTAL[0]=TOTAL[0]+1,I[0]=1,R[1]=RND,R[2]=RND,R[3]=RND,R[4]=RND,R[5]=RND,I[5]=1+(10-1)*R[5],I[6]=CLK,I[1]=(R[1]<CUSTPREF[1;1])+2*((R[1]>CUSTPREF[1;1])&(R[1]<(CUSTPREF[1;1]+CUSTPREF[1;2])))+3*((R[1]>(CUSTPREF[1;1]+CUSTPREF[1;2]))&(R[1]<(CUSTPREF[1;1]+CUSTPREF[1;2]+CUSTPREF[1;3]))),I[2]=(R[2]<CUSTPREF[2;1])+2*((R[2]>CUSTPREF[2;1])&(R[2]<(CUSTPREF[2;1]+CUSTPREF[2;2])))+3*((R[2]>(CUSTPREF[2;1]+CUSTPREF[2;2]))&(R[2]<(CUSTPREF[2;1]+CUSTPREF[2;2]+CUSTPREF[2;3]))),I[3]=(R[3]<CUSTPREF[3;1])+2*((R[3]>CUSTPREF[3;1])&(R[3]<(CUSTPREF[3;1]+CUSTPREF[3;2])))+3*((R[3]>(CUSTPREF[3;1]+CUSTPREF[3;2]))&(R[3]<(CUSTPREF[3;1]+CUSTPREF[3;2]+CUSTPREF[3;3]))),I[4]=(R[4]<CUSTPREF[4;1])+2*((R[4]>CUSTPREF[4;1])&(R[4]<(CUSTPREF[4;1]+CUSTPREF[4;2])))+3*((R[4]>(CUSTPREF[4;1]+CUSTPREF[4;2]))&(R[4]<(CUSTPREF[4;1]+CUSTPREF[4;2]+CUSTPREF[4;3]))),TOTAL[4]=TOTAL[4]+(CLK<OPTIME[2]),TOTAL[2]=TOTAL[2]+I[5]
+Parameter(s):     
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X:  2.02;  Y:  2.72;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #7
+Name:             JOINQ
+Description:      
+State Changes:    QTYPE=(INDEX+5*TYPE)*TYPE+2,Q[QTYPE]=Q[QTYPE]+(PUT{INC;QTYPE})
+Parameter(s):     ENT[0],ENT[1],ENT[2],ENT[3],ENT[4],ENT[5],ENT[6],ENT[7],ENT[8],TYPE
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X:  2.59;  Y:  1.23;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #8
+Name:             NEXTQ
+Description:      "2" is the location of the customers who have already ordered and their cupcakes are going through the process of being completed
+State Changes:    Q[2]=Q[2]-GET{FST;2},I[0]=ENT[0],I[1]=ENT[1],I[2]=ENT[2],I[3]=ENT[3],I[4]=ENT[4],I[5]=ENT[5],I[6]=ENT[6],ID=ENT[7],INDEX=ENT[8]
+Parameter(s):     AVAIL
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X: -0.00;  Y:  1.24;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #9
+Name:             RESTK
+Description:      RESTOCK[INDEX;TYPE] is a boolean array that is initally set to 0 for product INDEX of type TYPE (ex, product=cake, type=vanilla) and becomes one when that type of product is in the process of being restocked (this functions to eliminate multiple RESTOCKS being scheduled for a particular type of product)
+State Changes:    RES[0]=RES[0]-1,RESTOCK[INDEX;TYPE]=1,PREPT=13+(17-13)*RND
+Parameter(s):     INDEX,TYPE
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X: -0.66;  Y:  1.93;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #10
+Name:             FINISHR
+Description:      20 is the extra amount that was made when a restock event was executed
+State Changes:    SUPPLY[INDEX;TYPE]=SUPPLY[INDEX;TYPE]+24+24*(INDEX==1),RESTOCK[INDEX;TYPE]=0,QTYPE=((INDEX+5*TYPE)*TYPE+2),RES[0]=RES[0]+1*(INDEX>1),RES[3]=RES[3]+1*(INDEX==1),RES[2]=RES[2]+1*(INDEX>1)
+Parameter(s):     INDEX,TYPE,PREPT
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X: -1.02;  Y:  2.27;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #11
+Name:             START_S
+Description:      
+State Changes:    RES[0]=RES[0]-1,RES[1]=RES[1]-1*(INDEX==0),SUPPLY[INDEX;I[INDEX]]=SUPPLY[INDEX;I[INDEX]]-I[5]*(INDEX>0)
+Parameter(s):     I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X:  1.00;  Y:  1.63;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #12
+Name:             WARMUP
+Description:      
+State Changes:    INVT[OPTIME[3];1]=SUPPLY[1;1],INVT[OPTIME[3];2]=SUPPLY[1;2],INVT[OPTIME[3];3]=SUPPLY[1;3],INVT[OPTIME[3];4]=SUPPLY[2;1],INVT[OPTIME[3];5]=SUPPLY[2;2],INVT[OPTIME[3];6]=SUPPLY[2;3],INVT[OPTIME[3];7]=SUPPLY[3;1],INVT[OPTIME[3];8]=SUPPLY[3;2],INVT[OPTIME[3];9]=SUPPLY[3;3],INVT[OPTIME[3];10]=SUPPLY[4;1],INVT[OPTIME[3];11]=SUPPLY[4;2],INVT[OPTIME[3];12]=SUPPLY[4;3],OPTIME[2]=OPTIME[1]+(OPTIME[0]+OPTIME[4]),OPTIME[3]=OPTIME[3]+1,CLOSE=0,CLOSESTK[1;1]=0,CLOSESTK[1;2]=0,CLOSESTK[1;3]=0,CLOSESTK[2;1]=0,CLOSESTK[2;2]=0,CLOSESTK[2;3]=0,CLOSESTK[3;1]=0,CLOSESTK[3;2]=0,CLOSESTK[3;3]=0,CLOSESTK[4;1]=0,CLOSESTK[4;2]=0,CLOSESTK[4;3]=0,TOTAL[2]=0,TOTAL[3]=0,TOTAL[4]=0,TOTAL[5]=0,SUPPLY[1;1]=SUPPLY[1;1]+8*MISC[2],SUPPLY[1;2]=SUPPLY[1;2]+8*MISC[2],SUPPLY[1;3]=SUPPLY[1;3]+8*MISC[2],SUPPLY[2;1]=SUPPLY[2;1]+8*MISC[2],SUPPLY[2;2]=SUPPLY[2;2]+8*MISC[2],SUPPLY[2;3]=SUPPLY[2;3]+8*MISC[2],SUPPLY[3;1]=SUPPLY[3;1]+8*MISC[2],SUPPLY[3;2]=SUPPLY[3;2]+8*MISC[2],SUPPLY[3;3]=SUPPLY[3;3]+8*MISC[2],SUPPLY[4;1]=SUPPLY[4;1]+8*MISC[2],SUPPLY[4;2]=SUPPLY[4;2]+8*MISC[2],SUPPLY[4;3]=SUPPLY[4;3]+8*MISC[2]
+Parameter(s):     OPTIME[4]
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X:  1.00;  Y:  2.72;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #13
+Name:             GET_PUT
+Description:      
+State Changes:    Q[QTYPE]=Q[QTYPE]-GET{FST;QTYPE},Q[2]=Q[2]+PUT{INC;2}
+Parameter(s):     QTYPE
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X: -1.01;  Y:  1.24;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #14
+Name:             INPUT_D
+Description:      
+State Changes:    RESTOCK[IND[0];IND[1]]=DISK{RESTOCK.DAT;(IND[0]*4+IND[1]+1)},RESTOCKT[IND[0];IND[1]]=DISK{RESTOCKT.DAT;(IND[0]*4+IND[1]+1)},SERVICET[IND[0];IND[1]]=DISK{SERVICET.DAT;(IND[0]*4+IND[1]+1)}
+Parameter(s):     IND[0],IND[1]
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X: -0.30;  Y:  2.72;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #15
+Name:             AVAIL_W
+Description:      
+State Changes:    RES[0]=RES[0]+1,RES[2]=RES[2]+1
+Parameter(s):     
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X: -0.65;  Y:  1.46;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+     Vertex #16
+Name:             CLOSING
+Description:      
+State Changes:    CLOSE=1,REMAIN=TOTAL[2]-TOTAL[3],CLOSESTK[1;1]=(SUPPLY[1;1]>(CUSTPREF[1;1]*REMAIN)),CLOSESTK[1;2]=(SUPPLY[1;2]>(CUSTPREF[1;2]*REMAIN)),CLOSESTK[1;3]=(SUPPLY[1;3]>(CUSTPREF[1;3]*REMAIN)),CLOSESTK[2;1]=(SUPPLY[2;1]>(CUSTPREF[2;1]*REMAIN)),CLOSESTK[2;2]=(SUPPLY[2;2]>(CUSTPREF[2;2]*REMAIN)),CLOSESTK[2;3]=(SUPPLY[2;3]>(CUSTPREF[2;3]*REMAIN)),CLOSESTK[3;1]=(SUPPLY[3;1]>(CUSTPREF[3;1]*REMAIN)),CLOSESTK[3;2]=(SUPPLY[3;2]>(CUSTPREF[3;2]*REMAIN)),CLOSESTK[3;3]=(SUPPLY[3;3]>(CUSTPREF[3;3]*REMAIN)),CLOSESTK[4;1]=(SUPPLY[4;1]>(CUSTPREF[4;1]*REMAIN)),CLOSESTK[4;2]=(SUPPLY[4;2]>(CUSTPREF[4;2]*REMAIN)),CLOSESTK[4;3]=(SUPPLY[4;3]>(CUSTPREF[4;3]*REMAIN))
+Parameter(s):     
+Bitmap(Inactive): 
+Bitmap(Active):   
+Use Flowchart Shapes:   0
+Use Opaque Bitmaps:   0
+Location:         X:  2.03;  Y:  0.90;  Z: -1.00;
+Local Trace:      
+Trace Location:   Bottom
+
+
+
+          EDGES
+          -----
+
+
+     Graphics Edge #1
+
+  Sub-Edge #1
+Description:   
+Type:          Scheduling
+Origin:        CHECK_S
+Destination:   LEAVE
+Condition:     (INDEX==4)&(I[INDEX]==0)
+Delay:         0
+Priority:      5
+Attributes:    I[5],I[6],ID
+
+     Graphics Edge #2
+
+  Sub-Edge #2
+Description:   
+Type:          Scheduling
+Origin:        CHECK_S
+Destination:   SUP
+Condition:     (I[INDEX]>0)
+Delay:         0
+Priority:      5
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX
+
+     Graphics Edge #3
+
+  Sub-Edge #3
+Description:   
+Type:          Scheduling
+Origin:        CHECK_S
+Destination:   CHECK_S
+Condition:     I[INDEX]==0&INDEX<4
+Delay:         0
+Priority:      5
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX+1
+
+     Graphics Edge #4
+
+  Sub-Edge #4
+Description:   
+Type:          Scheduling
+Origin:        FINISH
+Destination:   CHECK_S
+Condition:     INDEX<4
+Delay:         0
+Priority:      5
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX+1
+
+     Graphics Edge #5
+
+  Sub-Edge #5
+Description:   
+Type:          Scheduling
+Origin:        ARRIVE
+Destination:   ARRIVE
+Condition:     CLK<OPTIME[2]
+Delay:         1+(10-1)*RND
+Priority:      5
+Attributes:    
+
+     Graphics Edge #6
+
+  Sub-Edge #6
+Description:   
+Type:          Scheduling
+Origin:        FINISH
+Destination:   LEAVE
+Condition:     INDEX==4
+Delay:         0
+Priority:      5
+Attributes:    I[5],I[6],ID
+
+     Graphics Edge #7
+
+  Sub-Edge #7
+Description:   If there are still orders to be fulfilled/cupcakes to be made, the available server will start service on the customer with the lowest ID's cupcake order
+Type:          Scheduling
+Origin:        FINISH
+Destination:   NEXTQ
+Condition:     (INDEX==4)&(RES[0]>0)&(Q[2]>0)
+Delay:         0
+Priority:      5
+Attributes:    0
+
+     Graphics Edge #8
+
+  Sub-Edge #8
+Description:   
+Type:          Scheduling
+Origin:        NEXTQ
+Destination:   SUP
+Condition:     1==1
+Delay:         0
+Priority:      4
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX
+
+     Graphics Edge #9
+
+  Sub-Edge #9
+Description:   
+Type:          Scheduling
+Origin:        RESTK
+Destination:   FINISHR
+Condition:     (INDEX>1)
+Delay:         RESTOCKT[INDEX;0]+(RESTOCKT[INDEX;1]-RESTOCKT[INDEX;0])*RND
+Priority:      4
+Attributes:    INDEX,TYPE,0
+
+  Sub-Edge #10
+Description:   
+Type:          Scheduling
+Origin:        RESTK
+Destination:   FINISHR
+Condition:     (INDEX==1)
+Delay:         (RESTOCKT[INDEX;0]+(RESTOCKT[INDEX;1]-RESTOCKT[INDEX;0])*RND)+PREPT
+Priority:      4
+Attributes:    INDEX,TYPE,PREPT
+
+     Graphics Edge #10
+
+  Sub-Edge #11
+Description:   
+Type:          Scheduling
+Origin:        SUP
+Destination:   START_S
+Condition:     ((SUPPLY[INDEX;I[INDEX]]-1*I[5])>=0)&(RES[0]>0)&(INDEX>0)
+Delay:         0
+Priority:      3
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX
+
+  Sub-Edge #12
+Description:   
+Type:          Scheduling
+Origin:        SUP
+Destination:   START_S
+Condition:     (RES[0]>0)&(RES[1]>0)&(INDEX==0)
+Delay:         0
+Priority:      3
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX
+
+     Graphics Edge #11
+
+  Sub-Edge #13
+Description:   
+Type:          Scheduling
+Origin:        START_S
+Destination:   FINISH
+Condition:     (INDEX>0)
+Delay:         (SERVICET[INDEX;0]+(SERVICET[INDEX;1]-SERVICET[INDEX;0])*RND)*I[5]
+Priority:      5
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX
+
+  Sub-Edge #14
+Description:   
+Type:          Scheduling
+Origin:        START_S
+Destination:   FINISH
+Condition:     (INDEX==0)
+Delay:         (SERVICET[INDEX;0]+(SERVICET[INDEX;1]-SERVICET[INDEX;0])*RND)
+Priority:      5
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX
+
+     Graphics Edge #12
+
+  Sub-Edge #15
+Description:   If customer has already ordered and there are no available workers (but there are enough supplies)
+Type:          Scheduling
+Origin:        SUP
+Destination:   JOINQ
+Condition:     (INDEX>0)&(RES[0]<=0)&((SUPPLY[INDEX;I[INDEX]]-1*I[5])>=0)
+Delay:         0
+Priority:      5
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX,0
+
+  Sub-Edge #16
+Description:   If customer has not ordered yet and there are no available workers or cash registers
+Type:          Scheduling
+Origin:        SUP
+Destination:   JOINQ
+Condition:     ((INDEX==0)&(RES[0]<=0))|((INDEX==0)&(RES[1]<=0))
+Delay:         0
+Priority:      5
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX,0
+
+  Sub-Edge #37
+Description:   If the customer has already ordered and there are not enough supplies to satisfy order
+Type:          Scheduling
+Origin:        SUP
+Destination:   JOINQ
+Condition:     (INDEX>0)&((SUPPLY[INDEX;I[INDEX]]-1*I[5])<0)
+Delay:         0
+Priority:      5
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],ID,INDEX,I[INDEX]
+
+     Graphics Edge #13
+
+  Sub-Edge #17
+Description:   The delay corresponds to the length of time spent preparing supplies before opening store to customers
+Type:          Scheduling
+Origin:        WARMUP
+Destination:   ARRIVE
+Condition:     1==1
+Delay:         OPTIME[0]
+Priority:      5
+Attributes:    
+
+     Graphics Edge #14
+
+  Sub-Edge #18
+Description:   How will we know when the last customer leaves the system for the day?  1) when the number of available servers = number of total servers, 2) when the number in Q and ORDERQ equals 0,  3) when CLK > OPEN
+Type:          Scheduling
+Origin:        LEAVE
+Destination:   WARMUP
+Condition:     (RES[0]==INPUT[0])&(Q[2]==0)&(CLK>OPTIME[2])&(OPTIME[3]<7)&(RESTOCK[4;1]==0)&(RESTOCK[4;2]==0)&(RESTOCK[1;1]==0)&(RESTOCK[1;2]==0)&(RESTOCK[2;1]==0)&(RESTOCK[2;2]==0)&(RESTOCK[3;1]==0)&(RESTOCK[3;2]==0)
+Delay:         0
+Priority:      10
+Attributes:    CLK
+
+     Graphics Edge #15
+
+  Sub-Edge #19
+Description:   
+Type:          Scheduling
+Origin:        FINISHR
+Destination:   WARMUP
+Condition:     (RES[0]==INPUT[0])&(Q[2]==0)&(CLK>OPTIME[2])&(Q[TYPE]<=0)&(OPTIME[3]<7)&(RESTOCK[4;1]==0)&(RESTOCK[4;2]==0)&(RESTOCK[1;1]==0)&(RESTOCK[1;2]==0)&(RESTOCK[2;1]==0)&(RESTOCK[2;2]==0)&(RESTOCK[3;1]==0)&(RESTOCK[3;2]==0)
+Delay:         0
+Priority:      10
+Attributes:    CLK
+
+     Graphics Edge #16
+
+  Sub-Edge #20
+Description:   
+Type:          Scheduling
+Origin:        FINISHR
+Destination:   GET_PUT
+Condition:     Q[QTYPE]>0
+Delay:         0
+Priority:      3
+Attributes:    QTYPE
+
+     Graphics Edge #17
+
+  Sub-Edge #21
+Description:   
+Type:          Scheduling
+Origin:        GET_PUT
+Destination:   GET_PUT
+Condition:     Q[QTYPE]>0
+Delay:         0
+Priority:      3
+Attributes:    QTYPE
+
+     Graphics Edge #18
+
+  Sub-Edge #22
+Description:   For cupcake restock
+Type:          Scheduling
+Origin:        FINISH
+Destination:   RESTK
+Condition:     (SUPPLY[INDEX;TYPE]<THRESH[INDEX])&(RES[0]>0)&(RESTOCK[INDEX;TYPE]==0)&(INDEX==1)&(CLOSESTK[INDEX;TYPE]==0)&(RES[3]>0)&(RES[2]>0)&(CLK<(OPTIME[2]-60))
+Delay:         0
+Priority:      8
+Attributes:    INDEX,TYPE
+
+  Sub-Edge #23
+Description:   For other supply restock
+Type:          Scheduling
+Origin:        FINISH
+Destination:   RESTK
+Condition:     (SUPPLY[INDEX;TYPE]<THRESH[INDEX])&(RES[0]>0)&(RESTOCK[INDEX;TYPE]==0)&(INDEX>1)&(CLOSESTK[INDEX;TYPE]==0)&(RES[2]>0)
+Delay:         0
+Priority:      8
+Attributes:    INDEX,TYPE
+
+     Graphics Edge #19
+
+  Sub-Edge #24
+Description:   For cupcake restock
+Type:          Scheduling
+Origin:        SUP
+Destination:   RESTK
+Condition:     ((SUPPLY[INDEX;I[INDEX]]-1*I[5])<0)&(INDEX==1)&(RESTOCK[INDEX;I[INDEX]]==0)&RES[0]>0&RES[3]>0&RES[2]>0
+Delay:         0
+Priority:      4
+Attributes:    INDEX,I[INDEX]
+
+  Sub-Edge #36
+Description:   For other supply restock
+Type:          Scheduling
+Origin:        SUP
+Destination:   RESTK
+Condition:     ((SUPPLY[INDEX;I[INDEX]]-1*I[5])<0)&(INDEX>1)&(RESTOCK[INDEX;I[INDEX]]==0)&RES[0]>0&RES[2]>0
+Delay:         0
+Priority:      5
+Attributes:    INDEX,I[INDEX]
+
+     Graphics Edge #20
+
+  Sub-Edge #25
+Description:   
+Type:          Scheduling
+Origin:        GET_PUT
+Destination:   NEXTQ
+Condition:     (Q[QTYPE]==0)&(Q[2]>0)
+Delay:         0
+Priority:      5
+Attributes:    RES[0]
+
+     Graphics Edge #21
+
+  Sub-Edge #26
+Description:   
+Type:          Scheduling
+Origin:        ARRIVE
+Destination:   JOINQ
+Condition:     (CLK<OPTIME[2])&((RES[0]<=0)|(RES[1]<=0))
+Delay:         0
+Priority:      5
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],TOTAL[0],0,0
+
+     Graphics Edge #22
+
+  Sub-Edge #27
+Description:   
+Type:          Scheduling
+Origin:        ARRIVE
+Destination:   SUP
+Condition:     (RES[0]>0)&(RES[1]>0)&(CLK<OPTIME[2])
+Delay:         0
+Priority:      10
+Attributes:    I[0],I[1],I[2],I[3],I[4],I[5],I[6],TOTAL[0],0
+
+     Graphics Edge #23
+
+  Sub-Edge #28
+Description:   
+Type:          Scheduling
+Origin:        NEXTQ
+Destination:   NEXTQ
+Condition:     (AVAIL>1)&(Q[2]>0)&(AVAIL<99)
+Delay:         0
+Priority:      5
+Attributes:    AVAIL-1
+
+     Graphics Edge #24
+
+  Sub-Edge #29
+Description:   
+Type:          Scheduling
+Origin:        RUN
+Destination:   INPUT_D
+Condition:     1==1
+Delay:         0
+Priority:      5
+Attributes:    0,0
+
+     Graphics Edge #25
+
+  Sub-Edge #30
+Description:   
+Type:          Scheduling
+Origin:        INPUT_D
+Destination:   WARMUP
+Condition:     IND[0]==4&IND[1]==3
+Delay:         0
+Priority:      5
+Attributes:    0
+
+     Graphics Edge #26
+
+  Sub-Edge #31
+Description:   
+Type:          Scheduling
+Origin:        INPUT_D
+Destination:   INPUT_D
+Condition:     (IND[0]<=4)&(IND[1]<3)
+Delay:         0
+Priority:      5
+Attributes:    IND[0],IND[1]+1
+
+  Sub-Edge #32
+Description:   
+Type:          Scheduling
+Origin:        INPUT_D
+Destination:   INPUT_D
+Condition:     (IND[0]<4)&(IND[1]==3)
+Delay:         0
+Priority:      5
+Attributes:    IND[0]+1,0
+
+     Graphics Edge #27
+
+  Sub-Edge #33
+Description:   
+Type:          Scheduling
+Origin:        RESTK
+Destination:   AVAIL_W
+Condition:     (INDEX==1)
+Delay:         PREPT
+Priority:      5
+Attributes:    
+
+     Graphics Edge #28
+
+  Sub-Edge #34
+Description:   
+Type:          Scheduling
+Origin:        AVAIL_W
+Destination:   NEXTQ
+Condition:     Q[2]>0
+Delay:         0
+Priority:      5
+Attributes:    100
+
+     Graphics Edge #29
+
+  Sub-Edge #35
+Description:   
+Type:          Scheduling
+Origin:        SUP
+Destination:   CLOSING
+Condition:     (CLK>OPTIME[2])&(CLOSE==0)
+Delay:         0
+Priority:      5
+Attributes:    
+
